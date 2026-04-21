@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Generation Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 48px 24px 36px;
+      text-align: center;
+    }
+    header .venue {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #426AA0;
+      margin-bottom: 14px;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      max-width: 820px;
+      margin: 0 auto 20px;
+      line-height: 1.35;
+    }
+    header .authors {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    header .links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header .links a {
+      display: inline-block;
+      padding: 7px 18px;
+      border: 1.5px solid #426AA0;
+      border-radius: 20px;
+      color: #426AA0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    header .links a:hover {
+      background: #426AA0;
+      color: #fff;
+    }
+
+    /* ── Sections ────────────────────────────────────────────── */
+    .section {
+      max-width: 900px;
+      margin: 48px auto;
+      padding: 0 24px;
+    }
+    .section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #426AA0;
+    }
+    .abstract-box {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 28px 32px;
+      font-size: 0.97rem;
+      color: #444;
+      line-height: 1.8;
+    }
+
+    /* ── Tab navigation ──────────────────────────────────────── */
+    .tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      padding: 8px 20px;
+      border: 1.5px solid #426AA0;
+      border-radius: 20px;
+      background: #fff;
+      color: #426AA0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn:hover,
+    .tab-btn.active {
+      background: #426AA0;
+      color: #fff;
+    }
+
+    /* ── Demo panel / card ───────────────────────────────────── */
+    .demo-panel { display: none; }
+    .demo-panel.active { display: block; }
+
+    .demo-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .demo-card-header {
+      background: #f0f4fa;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 14px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+    .demo-card-body {
+      padding: 24px;
+    }
+    .demo-card video {
+      width: 100%;
+      border-radius: 6px;
+      background: #000;
+      display: block;
+      max-height: 480px;
+    }
+    .demo-comment {
+      margin-top: 18px;
+      font-size: 0.93rem;
+      color: #555;
+      line-height: 1.75;
+    }
+    .demo-comment strong { color: #2c3e50; }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.82rem;
+      color: #999;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 48px;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.4rem; }
+      .abstract-box { padding: 20px; }
+      .demo-card-body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════════════════════ -->
+<header>
+  <div class="venue">JNMR 2026</div>
+  <h1>Modulator: A Framework for Controllable Key Modulations in Generated Music</h1>
+  <div class="authors">Anonymous Authors</div>
+  <div class="links">
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     ABSTRACT
+═══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2>Abstract</h2>
+  <div class="abstract-box">
+    <p>
+      The ability to transition between two tonalities, or to modulate, is a vital compositional tool for shaping emotional contour and musical tension. However, controlling the generation of key changes in a meaningful and musically coherent manner is a significant challenge for AI-driven music systems, owing to the lack of large scale annotated modulation datasets. To overcome this data scarcity problem, we formulate musical modulation as a generative infilling task that enables models to learn from vast amounts of unannotated data via self-supervised training. We evaluate this framework through a purpose-built LLaMA-based infilling model which supports both an autonomous generation mode and a rule-guided model conditioned on harmonic progressions. To assess the modulatory mechanics without relying on ground-truth annotations, we design a multi-dimensional, reference-free evaluation suite quantifying stylistic coherence, rhythmic continuity, voice-leading smoothness, and harmonic tension. We validate these metrics through a subjective listening test to demonstrate a meaningful correlation with human aesthetic perception. Furthermore, zero-shot evaluations on both human-composed reconstructions and forced modulations across varying semitone shifts show that our autonomous model mitigates harmonic shock and maintains stylistic cohesion, even when navigating distant tonal intervals.
+    </p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     HIGHLIGHTS
+═══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2>Highlights</h2>
+  <p style="margin-bottom:24px; color:#555; font-size:0.93rem;">
+    The following two examples illustrate the same modulation, from A♭ minor to A minor,
+    as composed by a human and as generated autonomously by our model.
+    They serve as a representative showcase of what our framework can achieve.
+  </p>
+  <div style="display:flex; flex-direction:column; gap:24px; max-width:680px; margin:0 auto;">
+    <div class="demo-card">
+      <div class="demo-card-header">Human-Composed (Ground Truth) &ndash; A♭ minor to A minor</div>
+      <div class="demo-card-body">
+        <video controls>
+          <source src="Modulator/Best/646_human.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div class="demo-comment">
+          <strong>Commentary:</strong> The piece modulates from A♭ minor to A minor. The original human-composed bridge from the POP909 dataset.
+        </div>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-card-header">Autonomous Model &ndash; A♭ minor to A minor</div>
+      <div class="demo-card-body">
+        <video controls>
+          <source src="Modulator/Best/646_normal.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div class="demo-comment">
+          <strong>Commentary:</strong> The piece modulates from A♭ minor to A minor. This example is particularly noteworthy because the model not only generates harmonically coherent and well-resolved voice leading, but also introduces rhythmic novelty within the transition window, making it one of the most musically interesting outputs produced by our framework.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODULATION EXAMPLES  (content rendered by JS below)
+═══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2>Modulation Examples</h2>
+  <p style="margin-bottom:16px; color:#555; font-size:0.93rem;">
+    Each example shows five versions of the same modulation window: the human-composed
+    reference (Ground Truth) and four generated variants. Use the tabs to navigate between examples.
+  </p>
+  <p style="margin-bottom:24px; padding:10px 16px; background:#f0f4fa; border-left:3px solid #426AA0; border-radius:4px; color:#444; font-size:0.9rem;">
+    <strong>Note:</strong> In all clips, the generated modulation window spans from <strong>00:20 to 00:30</strong>. The context preceding and succeeding it are the same as the original human composition across all methods.
+  </p>
+
+  <div class="tab-bar"       id="tab-bar"></div>
+  <div id="panels-container"></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer>
+  Anonymous submission. Do not distribute.
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     DATA + RENDERER
+     ─────────────────────────────────────────────────────────
+     To update content, edit only the MODULATIONS array below.
+     • label    : tab button text
+     • examples : array of 5 objects, one per video
+         – title   : card header (e.g. "Example 1-A — C → G")
+         – video   : path to the .mp4 file
+         – comment : commentary text shown below the video
+═══════════════════════════════════════════════════════════ -->
+<script>
+const MODULATIONS = [
+  {
+    label: 'Modulation 1',
+    examples: [
+      {
+        title:   'Example 1-A — Human-Composed (Ground Truth)',
+        video:   'Modulator/8/human/190.mp4',
+        comment: 'The piece modulates from C major to F♯ minor.',
+      },
+      {
+        title:   'Example 1-B — Autonomous Model',
+        video:   'Modulator/8/normal/190_reconstructed.mp4',
+        comment: 'The piece modulates from C major to F♯ minor. The model generates a coherent bridge without chord conditioning, producing a melodic arc that navigates the dramatic tonal distance with reasonable fluency.',
+      },
+      {
+        title:   'Example 1-C — Rule-Guided Model',
+        video:   'Modulator/8/chords/190_chords.mp4',
+        comment: 'The piece modulates from C major to F♯ minor. The rule-based harmonic back-cycling from the dominant of F♯ minor yields a clean, well-resolved bridge, though the approach results in a somewhat predictable harmonic contour.',
+      },
+      {
+        title:   'Example 1-D — LLM-Guided Model',
+        video:   'Modulator/8/llm_chords/190_llm_chords.mp4',
+        comment: 'The piece modulates from C major to F♯ minor. The LLM-generated chord progression handles the challenging tonal distance with stylistic plausibility, producing a smooth and convincing transition that closely approaches the quality of the rule-guided variant.',
+      },
+      {
+        title:   'Example 1-E — Anticipatory Music Transformer (AMT)',
+        video:   'Modulator/8/amt/190_amt.mp4',
+        comment: 'The piece modulates from C major to F♯ minor. The AMT baseline struggles with the large tonal distance, producing a melodically disjointed bridge that reflects the limitations of its anticipatory context window for long-range tonal resolution.',
+      },
+    ]
+  },
+  {
+    label: 'Modulation 2',
+    examples: [
+      {
+        title:   'Example 2-A — Human-Composed (Ground Truth)',
+        video:   'Modulator/2/human/181.mp4',
+        comment: 'The piece modulates from F major to F♯ major.',
+      },
+      {
+        title:   'Example 2-B — Autonomous Model',
+        video:   'Modulator/2/normal/181_normal.mp4',
+        comment: 'The piece modulates from F major to F♯ major. The model achieves a smooth, well-integrated bridge with clear tonal continuity, successfully navigating the semitone key shift without chord conditioning.',
+      },
+      {
+        title:   'Example 2-C — Rule-Guided Model',
+        video:   'Modulator/2/chords/181_chords.mp4',
+        comment: 'The piece modulates from F major to F♯ major. The rule-based harmonic back-cycling produces a particularly fluid and professionally crafted modulation — the highest-rated generated output across the entire evaluation.',
+      },
+      {
+        title:   'Example 2-D — LLM-Guided Model',
+        video:   'Modulator/2/llm_chords/181_llm_chords.mp4',
+        comment: 'The piece modulates from F major to F♯ major. The LLM-generated chord progression delivers smooth harmonic control, but with some insecurities.',
+      },
+      {
+        title:   'Example 2-E — Anticipatory Music Transformer (AMT)',
+        video:   'Modulator/2/amt/181_amt.mp4',
+        comment: 'The piece modulates from F major to F♯ major. The AMT baseline introduces significant rhythmic and melodic discontinuities across the semitone boundary.',
+      },
+    ]
+  },
+  {
+    label: 'Modulation 3',
+    examples: [
+      {
+        title:   'Example 3-A — Human-Composed (Ground Truth)',
+        video:   'Modulator/7/human/186.mp4',
+        comment: 'The piece modulates from G major to A♭ major.',
+      },
+      {
+        title:   'Example 3-B — Autonomous Model',
+        video:   'Modulator/7/normal/186_reconstructed.mp4',
+        comment: 'The piece modulates from G major to A♭ major. The model produces a generally smooth bridge but introduces a chord outside the expected tonality mid-transition, creating a brief moment of tonal ambiguity.',
+      },
+      {
+        title:   'Example 3-C — Rule-Guided Model',
+        video:   'Modulator/7/chords/186_chords.mp4',
+        comment: 'The piece modulates from G major to A♭ major. The rule-guided bridge features a well-placed pivot chord, confirming that back-cycling from the dominant of A♭ provides reliable harmonic logic for this semitone shift.',
+      },
+      {
+        title:   'Example 3-D — LLM-Guided Model',
+        video:   'Modulator/7/llm_chords/186_llm_chords.mp4',
+        comment: 'The piece modulates from G major to A♭ major. A notable failure case: the LLM-generated progression introduces unidiomatic voice leading, producing a jarring transition that illustrates the risk of unconstrained harmonic suggestions.',
+      },
+      {
+        title:   'Example 3-E — Anticipatory Music Transformer (AMT)',
+        video:   'Modulator/7/amt/186_amt.mp4',
+        comment: 'The piece modulates from G major to A♭ major. The AMT baseline generates a melodically repetitive bridge that undermines the overall musicality of the transition across the semitone boundary.',
+      },
+    ]
+  },
+  {
+    label: 'Modulation 4',
+    examples: [
+      {
+        title:   'Example 4-A — Human-Composed (Ground Truth)',
+        video:   'Modulator/5/human/654.mp4',
+        comment: 'The piece modulates from B minor to C minor.',
+      },
+      {
+        title:   'Example 4-B — Autonomous Model',
+        video:   'Modulator/5/normal/654_reconstructed.mp4',
+        comment: 'The piece modulates from B minor to C minor. The model generates a well-prepared and less abrupt bridge with voice leading that navigates the semitone key shift convincingly.',
+      },
+      {
+        title:   'Example 4-C — Rule-Guided Model',
+        video:   'Modulator/5/chords/654_chords.mp4',
+        comment: 'The piece modulates from B minor to C minor. The rule-guided bridge is functionally well-constructed, though the tight tonal distance introduces some ambiguity in the harmonic resolution despite the back-cycling approach.',
+      },
+      {
+        title:   'Example 4-D — LLM-Guided Model',
+        video:   'Modulator/5/llm_chords/654_llm_chords.mp4',
+        comment: 'The piece modulates from B minor to C minor. The multi-chord LLM-generated progression provides a more gradual harmonic journey than a single pivot chord, resulting in a perceptibly smoother transition across the tonal boundary.',
+      },
+      {
+        title:   'Example 4-E — Anticipatory Music Transformer (AMT)',
+        video:   'Modulator/5/amt/654_amt.mp4',
+        comment: 'The piece modulates from B minor to C minor. The AMT baseline yields mixed results, with some structural continuity present but limited voice-leading smoothness across the semitone boundary.',
+      },
+    ]
+  },
+  {
+    label: 'Modulation 5',
+    examples: [
+      {
+        title:   'Example 5-A — Human-Composed (Ground Truth)',
+        video:   'Modulator/9/human/202.mp4',
+        comment: 'The piece modulates from D♭ major to D major.',
+      },
+      {
+        title:   'Example 5-B — Autonomous Model',
+        video:   'Modulator/9/normal/202_reconstructed.mp4',
+        comment: 'The piece modulates from D♭ major to D major. The model generates a functional bridge that closely follows the stylistic context, producing a straightforward transition without major discontinuities.',
+      },
+      {
+        title:   'Example 5-C — Rule-Guided Model',
+        video:   'Modulator/9/chords/202_chords.mp4',
+        comment: 'The piece modulates from D♭ major to D major. The rule-guided bridge provides a well structured harmonic path through the semitone shift.',
+      },
+      {
+        title:   'Example 5-D — LLM-Guided Model',
+        video:   'Modulator/9/llm_chords/202_llm_chords.mp4',
+        comment: 'The piece modulates from D♭ major to D major. The LLM-generated progression adapts to the local harmonic context, offering a richer multi-chord trajectory that produces a very convincing modulation.',
+      },
+      {
+        title:   'Example 5-E — Anticipatory Music Transformer (AMT)',
+        video:   'Modulator/9/amt/202_amt.mp4',
+        comment: 'The piece modulates from D♭ major to D major. The AMT baseline achieves reasonable stylistic continuity on this example, suggesting the semitone key shift aligns relatively well with the model\'s anticipatory generation strategy.',
+      },
+    ]
+  },
+];
+
+function buildCard(ex) {
+  return `
+    <div class="demo-card">
+      <div class="demo-card-header">${ex.title}</div>
+      <div class="demo-card-body">
+        <video controls>
+          <source src="${ex.video}" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div class="demo-comment">
+          <strong>Commentary:</strong> ${ex.comment}
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ── Render ──────────────────────────────────────────────── */
+(function render() {
+  const tabBar  = document.getElementById('tab-bar');
+  const panels  = document.getElementById('panels-container');
+
+  MODULATIONS.forEach((mod, i) => {
+    const id      = 'mod' + (i + 1);
+    const isFirst = i === 0;
+
+    /* tab button */
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (isFirst ? ' active' : '');
+    btn.textContent = mod.label;
+    btn.onclick = function () { showTab(id, this); };
+    tabBar.appendChild(btn);
+
+    /* panel */
+    const panel = document.createElement('div');
+    panel.id        = id;
+    panel.className = 'demo-panel' + (isFirst ? ' active' : '');
+    panel.innerHTML = mod.examples.map(buildCard).join('');
+    panels.appendChild(panel);
+  });
+})();
+
+function showTab(id, btn) {
+  document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
