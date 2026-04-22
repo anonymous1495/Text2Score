@@ -175,8 +175,8 @@
      HEADER
 ═══════════════════════════════════════════════════════════ -->
 <header>
-  <div class="venue">JNMR 2026</div>
-  <h1>Modulator: A Framework for Controllable Key Modulations in Generated Music</h1>
+  <div class="venue">ISMIR 2026</div>
+  <h1>Text2Score: Generating Sheet Music From Textual Prompts</h1>
   <div class="authors">Anonymous Authors</div>
   <div class="links">
   </div>
@@ -190,7 +190,7 @@
   <h2>Abstract</h2>
   <div class="abstract-box">
     <p>
-      The ability to transition between two tonalities, or to modulate, is a vital compositional tool for shaping emotional contour and musical tension. However, controlling the generation of key changes in a meaningful and musically coherent manner is a significant challenge for AI-driven music systems, owing to the lack of large scale annotated modulation datasets. To overcome this data scarcity problem, we formulate musical modulation as a generative infilling task that enables models to learn from vast amounts of unannotated data via self-supervised training. We evaluate this framework through a purpose-built LLaMA-based infilling model which supports both an autonomous generation mode and a rule-guided model conditioned on harmonic progressions. To assess the modulatory mechanics without relying on ground-truth annotations, we design a multi-dimensional, reference-free evaluation suite quantifying stylistic coherence, rhythmic continuity, voice-leading smoothness, and harmonic tension. We validate these metrics through a subjective listening test to demonstrate a meaningful correlation with human aesthetic perception. Furthermore, zero-shot evaluations on both human-composed reconstructions and forced modulations across varying semitone shifts show that our autonomous model mitigates harmonic shock and maintains stylistic cohesion, even when navigating distant tonal intervals.
+      Developing text-driven symbolic music generation models remains challenging due to the scarcity of aligned text-music datasets and the unreliability of automated captioning pipelines. We present Text2Score, a two-stage framework comprising a planning stage and an execution stage for generating sheet music from natural language prompts. By deriving supervision signals directly from symbolic XML data, we propose an alternative training paradigm that bypasses the need for noisy or scarce text-music pairs. In the planning stage, an LLM orchestrator translates a natural language prompt into a structured measure-wise plan defining musical attributes such as instruments, key, time signatures, and harmony. This plan is then consumed by a generative model in the execution stage to produce interleaved ABC notation conditioned on the plan's structural constraints. To assess output quality, we introduce a comprehensive evaluation framework covering playability, readability, instrument utilization, structural complexity, and prompt adherence, validated by a subjective test involving expert musicians. Text2Score consistently outperforms both a pure LLM-based agentic framework and two end-to-end baselines across all objective and subjective dimensions.
     </p>
   </div>
 </div>
@@ -199,6 +199,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      HIGHLIGHTS
 ═══════════════════════════════════════════════════════════ -->
+<!--
 <div class="section">
   <h2>Highlights</h2>
   <p style="margin-bottom:24px; color:#555; font-size:0.93rem;">
@@ -233,20 +234,20 @@
     </div>
   </div>
 </div>
-
+-->
 
 <!-- ═══════════════════════════════════════════════════════════
-     MODULATION EXAMPLES  (content rendered by JS below)
+     GENERATED SHEET MUSIC EXAMPLES  (content rendered by JS below)
 ═══════════════════════════════════════════════════════════ -->
 <div class="section">
-  <h2>Modulation Examples</h2>
+  <h2>Generated Sheet-Music Examples</h2>
   <p style="margin-bottom:16px; color:#555; font-size:0.93rem;">
-    Each example shows five versions of the same modulation window: the human-composed
-    reference (Ground Truth) and four generated variants. Use the tabs to navigate between examples.
+    Each prompt example shows the generated scores from Text2Score, ComposerX, MIDILLM and Text2Midi-InferAlign. Use the tabs to navigate between examples.
   </p>
-  <p style="margin-bottom:24px; padding:10px 16px; background:#f0f4fa; border-left:3px solid #426AA0; border-radius:4px; color:#444; font-size:0.9rem;">
+<!--  <p style="margin-bottom:24px; padding:10px 16px; background:#f0f4fa; border-left:3px solid #426AA0; border-radius:4px; color:#444; font-size:0.9rem;">
     <strong>Note:</strong> In all clips, the generated modulation window spans from <strong>00:20 to 00:30</strong>. The context preceding and succeeding it are the same as the original human composition across all methods.
   </p>
+-->
 
   <div class="tab-bar"       id="tab-bar"></div>
   <div id="panels-container"></div>
@@ -264,7 +265,7 @@
 <!-- ═══════════════════════════════════════════════════════════
      DATA + RENDERER
      ─────────────────────────────────────────────────────────
-     To update content, edit only the MODULATIONS array below.
+     To update content, edit only the GENERATIONS array below.
      • label    : tab button text
      • examples : array of 5 objects, one per video
          – title   : card header (e.g. "Example 1-A — C → G")
@@ -272,28 +273,28 @@
          – comment : commentary text shown below the video
 ═══════════════════════════════════════════════════════════ -->
 <script>
-const MODULATIONS = [
+const GENERATIONS = [
   {
-    label: 'Modulation 1',
+    label: 'Example 1',
     examples: [
       {
-        title:   'Example 1-A — Human-Composed (Ground Truth)',
-        video:   'Modulator/8/human/190.mp4',
-        comment: 'The piece modulates from C major to F♯ minor.',
+        title:   'Example 1-A — Text2Score (Ours)',
+        video:   'Demo_Examples/12_166/166_Text2Score.mp4',
+        comment: 'Please write a bright, simple duet around 92 BPM in 3/4, in D major, for violin and piano. The violin should have a clear, singable melody while the piano keeps light chordal support with occasional gentle arpeggios. Form: A–B–A with an easy ending.',
       },
       {
-        title:   'Example 1-B — Autonomous Model',
-        video:   'Modulator/8/normal/190_reconstructed.mp4',
+        title:   'Example 1-B — ComposerX',
+        video:   'Demo_Examples/12_166/166_ComposerX.mp4',
         comment: 'The piece modulates from C major to F♯ minor. The model generates a coherent bridge without chord conditioning, producing a melodic arc that navigates the dramatic tonal distance with reasonable fluency.',
       },
       {
-        title:   'Example 1-C — Rule-Guided Model',
-        video:   'Modulator/8/chords/190_chords.mp4',
+        title:   'Example 1-C — MidiLLM',
+        video:   'Demo_Examples/12_166/166_MidiLLM.mp4',
         comment: 'The piece modulates from C major to F♯ minor. The rule-based harmonic back-cycling from the dominant of F♯ minor yields a clean, well-resolved bridge, though the approach results in a somewhat predictable harmonic contour.',
       },
       {
-        title:   'Example 1-D — LLM-Guided Model',
-        video:   'Modulator/8/llm_chords/190_llm_chords.mp4',
+        title:   'Example 1-D — Text2Midi-InferAlign',
+        video:   'Demo_Examples/12_166/166_Infer_Align.mp4',
         comment: 'The piece modulates from C major to F♯ minor. The LLM-generated chord progression handles the challenging tonal distance with stylistic plausibility, producing a smooth and convincing transition that closely approaches the quality of the rule-guided variant.',
       },
       {
@@ -446,7 +447,7 @@ function buildCard(ex) {
   const tabBar  = document.getElementById('tab-bar');
   const panels  = document.getElementById('panels-container');
 
-  MODULATIONS.forEach((mod, i) => {
+  GENERATIONS.forEach((mod, i) => {
     const id      = 'mod' + (i + 1);
     const isFirst = i === 0;
 
