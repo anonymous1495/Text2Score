@@ -325,7 +325,7 @@ const GENERATIONS = [
   },
   {
     label: 'Example 3',
-    prompt: 'The piece modulates from G major to A♭ major.',
+    prompt: 'A melancholic solo flute melody settling back into D minor, composed as a slow 6/8 barcarolle at 54 BPM.',
     examples: [
       {
         title: 'Example 3-A — Text2Score (Ours)',
@@ -351,61 +351,53 @@ const GENERATIONS = [
   },
   {
     label: 'Example 4',
-    prompt: 'The piece modulates from B minor to C minor.',
+    prompt: 'A baroque-inspired suite for a string orchestra in G minor. The first movement is a slow 4/4 at 68 BPM. Focus on a strong contrapuntal texture between the first violins and the cellos. The violas should fill in the middle harmonies with steady eighth-note patterns. It needs to feel academic yet expressive, ending on a strong Picardy third.',
     examples: [
       {
-        title: 'Example 4-A — Human-Composed (Ground Truth)',
-        video: 'Modulator/5/human/654.mp4',
+        title: 'Example 4-A — Text2Score (Ours)',
+        video: 'Demo_Examples/13_18/18_Text2Score.mp4',
       },
       {
-        title: 'Example 4-B — Autonomous Model',
-        video: 'Modulator/5/normal/654_reconstructed.mp4',
-        comment: 'The model generates a well-prepared and less abrupt bridge with voice leading that navigates the semitone key shift convincingly.',
+        title: 'Example 4-B — ComposerX',
+        video: 'Demo_Examples/13_18/18_ComposerX.mp4',
       },
       {
-        title: 'Example 4-C — Rule-Guided Model',
-        video: 'Modulator/5/chords/654_chords.mp4',
-        comment: 'The rule-guided bridge is functionally well-constructed, though the tight tonal distance introduces some ambiguity in the harmonic resolution despite the back-cycling approach.',
+        title: 'Example 4-C — Midi-LLM',
+        video: 'Demo_Examples/13_18/18_MidiLLM.mp4',
       },
       {
-        title: 'Example 4-D — LLM-Guided Model',
-        video: 'Modulator/5/llm_chords/654_llm_chords.mp4',
-        comment: 'The multi-chord LLM-generated progression provides a more gradual harmonic journey than a single pivot chord, resulting in a perceptibly smoother transition across the tonal boundary.',
+        title: 'Example 4-D — Text2Midi-InferAlign',
+        video: 'Demo_Examples/13_18/18_Infer_Align.mp4',
       },
       {
-        title: 'Example 4-E — Anticipatory Music Transformer (AMT)',
-        video: 'Modulator/5/amt/654_amt.mp4',
-        comment: 'The AMT baseline yields mixed results, with some structural continuity present but limited voice-leading smoothness across the semitone boundary.',
+        title: 'Example 4-E — MidiLM',
+        video: 'Demo_Examples/13_18/18_MidiLM.mp4',
       },
     ]
   },
   {
     label: 'Example 5',
-    prompt: 'The piece modulates from D♭ major to D major.',
+    prompt: 'Woodwind trio (Flute, Oboe, Clarinet) playing a playful jig in 6/8. Use a bright G-major world at 116 BPM.',
     examples: [
       {
-        title: 'Example 5-A — Human-Composed (Ground Truth)',
-        video: 'Modulator/9/human/202.mp4',
+        title: 'Example 5-A — Text2Score (Ours)',
+        video: 'Demo_Examples/14_7/7_Text2Score.mp4',
       },
       {
-        title: 'Example 5-B — Autonomous Model',
-        video: 'Modulator/9/normal/202_reconstructed.mp4',
-        comment: 'The model generates a functional bridge that closely follows the stylistic context, producing a straightforward transition without major discontinuities.',
+        title: 'Example 5-B — ComposerX',
+        video: 'Demo_Examples/14_7/7_ComposerX.mp4',
       },
       {
-        title: 'Example 5-C — Rule-Guided Model',
-        video: 'Modulator/9/chords/202_chords.mp4',
-        comment: 'The rule-guided bridge provides a well structured harmonic path through the semitone shift.',
+        title: 'Example 5-C — Midi-LLM',
+        video: 'Demo_Examples/14_7/7_MidiLLM.mp4',
       },
       {
-        title: 'Example 5-D — LLM-Guided Model',
-        video: 'Modulator/9/llm_chords/202_llm_chords.mp4',
-        comment: 'The LLM-generated progression adapts to the local harmonic context, offering a richer multi-chord trajectory that produces a very convincing modulation.',
+        title: 'Example 5-D — Text2Midi-InferAlign',
+        video: 'Demo_Examples/14_7/7_Infer_Align.mp4',
       },
       {
-        title: 'Example 5-E — Anticipatory Music Transformer (AMT)',
-        video: 'Modulator/9/amt/202_amt.mp4',
-        comment: 'The AMT baseline achieves reasonable stylistic continuity on this example, suggesting the semitone key shift aligns relatively well with the model\'s anticipatory generation strategy.',
+        title: 'Example 5-E — MidiLM',
+        video: 'Demo_Examples/14_7/7_MidiLM.mp4',
       },
     ]
   },
