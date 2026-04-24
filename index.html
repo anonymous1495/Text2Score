@@ -157,34 +157,17 @@
 	  margin-bottom: 1.5em;
 	  font-style: italic;
 	}
-
-    /* ── Footer ──────────────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 32px 24px;
-      font-size: 0.82rem;
-      color: #999;
-      border-top: 1px solid #e0e0e0;
-      margin-top: 48px;
-    }
-
-    /* ── Responsive ──────────────────────────────────────────── */
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.4rem; }
-      .abstract-box { padding: 20px; }
-      .demo-card-body { padding: 16px; }
-    }
 	
-    .llm-prompt-section {
+	.llm-prompt-section {
     margin: 2.5em auto;
     max-width: 900px;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
     font-family: inherit;
-  }
+   }
 
-  .llm-prompt-toggle {
+   .llm-prompt-toggle {
     width: 100%;
     background: #f0f0f0;
     border: none;
@@ -197,11 +180,11 @@
     justify-content: space-between;
     align-items: center;
     transition: background 0.2s;
-  }
+   }
 
-  .llm-prompt-toggle:hover {
+   .llm-prompt-toggle:hover {
     background: #e4e4e4;
-  }
+   }
 
   .llm-prompt-toggle .arrow {
     font-style: normal;
@@ -232,6 +215,23 @@
     color: #333;
     margin: 0;
   }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.82rem;
+      color: #999;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 48px;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.4rem; }
+      .abstract-box { padding: 20px; }
+      .demo-card-body { padding: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -317,14 +317,6 @@
   <div class="tab-bar"       id="tab-bar"></div>
   <div id="panels-container"></div>
 </div>
-
-
-<!-- ═══════════════════════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════════════════════ -->
-<footer>
-  Anonymous submission. Do not distribute.
-</footer>
 
 
 <script>
@@ -547,13 +539,19 @@ function showTab(id, btn) {
 
 
 <div class="llm-prompt-section">
+  <h2>LLM Prompts Used</h2>
+  <p style="margin-bottom: 1.2em; color: #555; font-size: 0.93rem;">
+    Below are the two LLM prompts used in this project. Click each to expand.
+  </p>
+
+  <!-- Prompt 1 -->
   <button class="llm-prompt-toggle" onclick="toggleLLMPrompt(this)" aria-expanded="false">
-    LLM System Prompt
+    Prompt 1 — Text2Score LLM Prompt
     <span class="arrow">▼</span>
   </button>
   <div class="llm-prompt-body">
-    <pre id="llm-prompt-text">
-<!-- ✏️  PASTE YOUR PROMPT HERE -->
+    <pre>
+<!-- ✏️ PASTE PROMPT 1 HERE -->
 You are an assistant music composer that creates structured musical plans based on user descriptions. Convert the user’s prompt into a concise, measure-wise musical plan highlighting only measures with significant changes (tempo, time/key signature, instrumentation, dynamics, note density, pitch range), rather than listing every consecutive measure.
 At the top, specify the total number of measures in the piece (use 30 if not provided). Specify a genre only if requested or if it is relevant to one of: symphony, classical piano, classical, jazz, pop, rock, metal, folk. Then list all instruments used.
 
@@ -685,6 +683,47 @@ User:
 Assistant:
     </pre>
   </div>
+
+  <!-- Prompt 2 -->
+  <button class="llm-prompt-toggle" onclick="toggleLLMPrompt(this)" aria-expanded="false">
+    Prompt 2 — Instrument Match LLM Prompt
+    <span class="arrow">▼</span>
+  </button>
+  <div class="llm-prompt-body">
+    <pre>
+<!-- ✏️ PASTE PROMPT 2 HERE -->
+You are an expert musicologist and sheet music librarian. Your task is to evaluate the "Instrument Adherence" of a generated symbolic music score based on a user's textual prompt.
+
+You will be provided with:
+1. The original TEXT PROMPT written by the user.
+2. A list of GENERATED UNIQUE INSTRUMENTS extracted from the resulting MusicXML file.
+
+Your job is to determine how accurately the generated instruments match the ensemble or solo constraints requested in the text prompt. 
+
+### Rules for Evaluation:
+1. Semantic Matching: MusicXML instrument names are often non-standard (e.g., "Acoustic Grand" = "Piano", "Violoncello" = "Cello", "Voice" = "Soprano"). Use your musical knowledge to match these semantically.
+2. Ensemble Knowledge: If the prompt asks for a standard ensemble (e.g., "String Quartet"), expect the standard instrumentation (2 Violins, Viola, Cello).
+3. The "Solo" Constraint: If the prompt explicitly requests a "Solo" instrument, the generated list MUST contain ONLY that instrument. The presence of any background instruments (e.g., drums, synth pads) is a major violation.
+4. Penalties: Deduct points for missing requested instruments, and deduct points for hallucinated/additional instruments that were not requested. If instruments are all grouped in a single part (e.g., Melody (Trumpets/Violins)), that is a partial violation, as it does not reflect the requested ensemble structure.
+
+### Scoring Rubric (1 to 10):
+* [10] Perfect Match: The generated instruments perfectly map to the requested ensemble or solo instrument. No missing instruments, no extra instruments.
+* [8-9] Minor Variations: The core ensemble is present, but there is a very minor addition or omission (e.g., requested a symphony orchestra, missing a tuba; or requested a trio, got the trio plus an appropriate auxiliary percussion).
+* [5-7] Partial Match: Some requested instruments are present, but there are glaring omissions or significant unwarranted additions.
+* [2-4] Major Violation: The generated instruments barely reflect the prompt. (e.g., requested a "Solo Piano", but generated "Piano, Drum Kit, Electric Bass").
+* [1] Complete Mismatch: None of the requested instruments are present (e.g., requested "Choir", generated "Brass Quintet").
+
+### Output Format:
+You must return your evaluation strictly as a valid JSON object with exactly two keys:
+- "reasoning": A brief 1-2 sentence explanation of your evaluation, noting any missing or hallucinated instruments.
+- "score": An integer from 1 to 10.
+
+---
+INPUT DATA:
+TEXT PROMPT: "{user_prompt}"
+GENERATED UNIQUE INSTRUMENTS: {generated_instruments_list}
+    </pre>
+  </div>
 </div>
 
 <script>
@@ -695,6 +734,14 @@ Assistant:
     btn.setAttribute('aria-expanded', isOpen);
   }
 </script>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer>
+  Anonymous submission. Do not distribute.
+</footer>
 
 
 </body>
