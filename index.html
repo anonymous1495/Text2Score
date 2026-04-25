@@ -161,10 +161,17 @@
 	.llm-prompt-section {
     margin: 2.5em auto;
     max-width: 900px;
-    border: 1px solid #ddd;
+    <!border: 1px solid #ddd;>
     border-radius: 8px;
     overflow: hidden;
     font-family: inherit;
+	
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: #2c3e50;
+	margin-bottom: 16px;
+	padding-bottom: 8px;
+	border-bottom: 2px solid #426AA0;
    }
 
    .llm-prompt-toggle {
@@ -736,7 +743,7 @@ function updateShowcase() {
 
 
 
-<div class="section">
+<div class="llm-prompt-section">
   <h2>LLM Prompts Used</h2>
   <p style="margin-bottom: 1.2em; color: #555; font-size: 0.93rem;">
     Below are the two LLM prompts used in this project. Click each to expand.
