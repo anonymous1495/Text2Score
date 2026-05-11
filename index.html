@@ -332,35 +332,35 @@
 const GENERATIONS = [
   {
     label: 'Example 1',
-    prompt: 'Please write a bright, simple duet around 92 BPM in 3/4, in D major, for violin and piano. The violin should have a clear, singable melody while the piano keeps light chordal support with occasional gentle arpeggios. Form: A–B–A with an easy ending.',
+    prompt: 'Write a compact brass-and-woodwind chorale at around 66 BPM in 4/4, in Bb major. Keep the melody mostly in the first trumpet and first horn, with clarinets filling inner voices and tuba holding long bass notes. Form: four phrases that build to a strong final cadence.',
     examples: [
-      { title: 'Example 1 — Text2Score (Ours)',       video: 'Demo_Examples/12_166/166_Text2Score.mp4' },
-      { title: 'Example 1 — ComposerX',               video: 'Demo_Examples/12_166/166_ComposerX.mp4' },
-      { title: 'Example 1 — Midi-LLM',                video: 'Demo_Examples/12_166/166_MidiLLM.mp4' },
-      { title: 'Example 1 — Text2Midi-InferAlign',    video: 'Demo_Examples/12_166/166_Infer_Align.mp4' },
-      { title: 'Example 1 — MidiLM',                  video: 'Demo_Examples/12_166/166_MidiLM.mp4' },
+      { title: 'Example 1 — Text2Score (Ours)',       video: 'Demo_Examples/10_108/108_Text2Score.mp4' },
+      { title: 'Example 1 — ComposerX',               video: 'Demo_Examples/10_108/108_ComposerX.mp4' },
+      { title: 'Example 1 — Midi-LLM',                video: 'Demo_Examples/10_108/108_MidiLLM.mp4' },
+      { title: 'Example 1 — Text2Midi-InferAlign',    video: 'Demo_Examples/10_108/108_Infer_Align.mp4' },
+      { title: 'Example 1 — MidiLM',                  video: 'Demo_Examples/10_108/108_MidiLM.mp4' },
     ]
   },
   {
     label: 'Example 2',
-    prompt: 'Write a compact brass-and-woodwind chorale at around 66 BPM in 4/4, in Bb major. Keep the melody mostly in the first trumpet and first horn, with clarinets filling inner voices and tuba holding long bass notes. Form: four phrases that build to a strong final cadence.',
+    prompt: 'A melancholic solo flute melody settling back into D minor, composed as a slow 6/8 barcarolle at 54 BPM.',
     examples: [
-      { title: 'Example 2 — Text2Score (Ours)',       video: 'Demo_Examples/10_108/108_Text2Score.mp4' },
-      { title: 'Example 2 — ComposerX',               video: 'Demo_Examples/10_108/108_ComposerX.mp4' },
-      { title: 'Example 2 — Midi-LLM',                video: 'Demo_Examples/10_108/108_MidiLLM.mp4' },
-      { title: 'Example 2 — Text2Midi-InferAlign',    video: 'Demo_Examples/10_108/108_Infer_Align.mp4' },
-      { title: 'Example 2 — MidiLM',                  video: 'Demo_Examples/10_108/108_MidiLM.mp4' },
+      { title: 'Example 2 — Text2Score (Ours)',       video: 'Demo_Examples/3_3/3_Text2Score.mp4' },
+      { title: 'Example 2 — ComposerX',               video: 'Demo_Examples/3_3/3_ComposerX.mp4' },
+      { title: 'Example 2 — Midi-LLM',                video: 'Demo_Examples/3_3/3_MidiLLM.mp4' },
+      { title: 'Example 2 — Text2Midi-InferAlign',    video: 'Demo_Examples/3_3/3_Infer_Align.mp4' },
+      { title: 'Example 2 — MidiLM',                  video: 'Demo_Examples/3_3/3_MidiLM.mp4' },
     ]
   },
   {
     label: 'Example 3',
-    prompt: 'A melancholic solo flute melody settling back into D minor, composed as a slow 6/8 barcarolle at 54 BPM.',
+    prompt: 'Please write a bright, simple duet around 92 BPM in 3/4, in D major, for violin and piano. The violin should have a clear, singable melody while the piano keeps light chordal support with occasional gentle arpeggios. Form: A–B–A with an easy ending.',
     examples: [
-      { title: 'Example 3 — Text2Score (Ours)',       video: 'Demo_Examples/3_3/3_Text2Score.mp4' },
-      { title: 'Example 3 — ComposerX',               video: 'Demo_Examples/3_3/3_ComposerX.mp4' },
-      { title: 'Example 3 — Midi-LLM',                video: 'Demo_Examples/3_3/3_MidiLLM.mp4' },
-      { title: 'Example 3 — Text2Midi-InferAlign',    video: 'Demo_Examples/3_3/3_Infer_Align.mp4' },
-      { title: 'Example 3 — MidiLM',                  video: 'Demo_Examples/3_3/3_MidiLM.mp4' },
+      { title: 'Example 3 — Text2Score (Ours)',       video: 'Demo_Examples/12_166/166_Text2Score.mp4' },
+      { title: 'Example 3 — ComposerX',               video: 'Demo_Examples/12_166/166_ComposerX.mp4' },
+      { title: 'Example 3 — Midi-LLM',                video: 'Demo_Examples/12_166/166_MidiLLM.mp4' },
+      { title: 'Example 3 — Text2Midi-InferAlign',    video: 'Demo_Examples/12_166/166_Infer_Align.mp4' },
+      { title: 'Example 3 — MidiLM',                  video: 'Demo_Examples/12_166/166_MidiLM.mp4' },
     ]
   },
   {
@@ -473,6 +473,14 @@ function showTab(id, btn) {
 <script>
 const SHOWCASE = [
   {
+    prompt: 'Create a luminous choral-orchestral meditation around 58 BPM in 4/4, centered in D major. The SATB choir is wordless and mostly sustained, entering in layers: basses first, then tenors, altos, sopranos. Underneath, strings should hold slow-moving harmony while harp and celesta add quiet shimmer at phrase peaks. Include solo horn for a simple two-note motif that returns between choral phrases. Form: gradual build to one warm climax, then dissolve into a long final cadence.',
+    video:  'Demo_Examples/Example_17/116_Text2Score.mp4',
+  },
+  {
+    prompt: 'Grand orchestral march in C major at 120 BPM. It needs a steady 4/4 pulse with bold brass and soaring strings.',
+    video:  'Demo_Examples/Example_15/4_Text2Score.mp4',
+  },
+  {
     prompt: 'Please write a bright duet around 92 BPM in 3/4, in D major, for violin and piano. Violin has a clear melody and the piano supports with light chordal writing. Form: A–B–A, ending in D major.',
     video:  'Demo_Examples/Example_16/235_Text2Score.mp4',
   },
@@ -483,10 +491,6 @@ const SHOWCASE = [
   {
     prompt: 'I\'m hoping for a bright chamber piece around 88 BPM in 3/4, in A minor—could it feel like a slow-turning waltz without being heavy? The clarinet should sing the main line, the piano keeps a gentle broken-chord bed, and the cello answers with a warm counterline. Important: keep the middle section tender, then return to the opening with a slightly fuller ending.',
     video:  'Demo_Examples/9_107/107_Text2Score.mp4',
-  },
-  {
-    prompt: 'Grand orchestral march in C major at 120 BPM. It needs a steady 4/4 pulse with bold brass and soaring strings.',
-    video:  'Demo_Examples/Example_15/4_Text2Score.mp4',
   },
 ];
 
